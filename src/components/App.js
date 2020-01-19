@@ -10,8 +10,11 @@ import LoginPage from './login/LoginPage'
 import NewEventPage from './events/NewEventPage'
 import requireAuth from "../util/requireAuth";
 import './bootstrap.css';
+import Task from "./Task";
 
 class App extends React.Component {
+
+
     render() {
         return (
             <div className="container">
@@ -22,6 +25,9 @@ class App extends React.Component {
                             <Route exact path="/" component={Main}/>
                             <Route path="/signup" component={SignupPage}/>
                             <Route path="/login" component={LoginPage}/>
+                            <Route path="/task/:id">
+                                <Task />
+                            </Route>
                             <Route path="/new-event" component={requireAuth(NewEventPage)}/>
                         </Switch>
                     </Router>
