@@ -1,11 +1,38 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {useDispatch} from "react-redux";
 import {getProblem} from "../../actions/getProblem";
 
-const Task = ({body, answer_1, answer_2, answer_3, answer_4, selectedOption, handleOptionChange, handleFormSubmit}) => {
+
+const Task = ({selectedOption, handleFormSubmit}) => {
     let {id} = useParams();
+    const [body, setBody] = useState(null);
+    const [answer_1, setAnswer_1] = useState(null);
+    const [answer_2, setAnswer_2] = useState(null);
+    const [answer_3, setAnswer_3] = useState(null);
+    const [answer_4, setAnswer_4] = useState(null);
+    const [changeState, setChangeState] = useState({selectedOption});
+
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getProblem(id)).then(res => {
+            setBody(res.data.body);
+            setAnswer_1(res.data.answer0);
+            setAnswer_2(res.data.answer1);
+            setAnswer_3(res.data.answer2);
+            setAnswer_4(res.data.answer3);
+            console.log(res.data);
+        })
+    }, []);
+
+    const handleOptionChange = changeEvent => {
+        setChangeState({
+            selectedOption: changeEvent.target.value
+        });
+    };
 
     return (
         <div className="card border-secondary mb-3">
@@ -74,17 +101,8 @@ const Task = ({body, answer_1, answer_2, answer_3, answer_4, selectedOption, han
 };
 
 Task.propTypes = {
-    body: PropTypes.string.isRequired,
-    answer_1: PropTypes.string,
-    answer_2: PropTypes.string,
-    answer_3: PropTypes.string,
-    answer_4: PropTypes.string,
     handleOptionChange: PropTypes.func.isRequired,
     handleFormSubmit: PropTypes.func.isRequired,
 };
 
-Task.defaultProps = {
-    selectedOption: ''
-};
-
-export default connect(null, {getProblem})(Task);
+export default Task;
