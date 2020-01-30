@@ -2,24 +2,26 @@ import React, {useEffect, useState} from "react";
 
 import Task from "../../components/Task";
 import {useParams} from "react-router";
+import {useDispatch} from "react-redux";
+import {getProblem} from "../../actions/getProblem";
+import {getTest} from "../../actions/getTest";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const Test = () => {
     let {id_test} = useParams();
     const [test, setTest] = useState(null);
-    const [task, setTask] = useState(null);
-    const [answers, setAnswers] = useState({answer_1: '', answer_2: ''});
+    const [tasks, setTasks] = useState(null);
+    const [answers, setAnswers] = useState({});
 
-    /*useEffect(() => {
-        setTask("Hi");
-    }, [setTask]);*/
+    const dispatch = useDispatch();
 
-
-
-/*    handleChange(event) {
-        this.setState({value: event.target.value});
-    }*/
+    useEffect(() => {
+        dispatch(getTest(id_test)).then(res => {
+            console.log(res.data);
+            setTasks(res.data.problems);
+        })
+    }, []);
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -28,24 +30,23 @@ const Test = () => {
     };
 
     const handleChangeAnswer = e => {
-        console.log(answers);
-
         answers[e.target.name]= e.target.value;
-        setAnswers(answers => {
-            return {...answers, ...answers}
-        });
-        console.log(answers);
+        setAnswers(answers => ({...answers, ...answers}));
     };
+
+
 
     return (
         <div className="Test">
             <h2>Тест {id_test}</h2>
-            {/*{task && task.map((item, key) =>
-                <Task data={item}
-                      key={key}/>
-            )}*/}
-            <Task id_not_useParams={1} handleFormSubmit={handleSubmit} handleChangeAnswer={handleChangeAnswer}/>
-            <Task id_not_useParams={2} handleFormSubmit={handleSubmit} handleChangeAnswer={handleChangeAnswer}/>
+            {tasks && tasks.split('|').map((id, index) =>
+                <Task key={id}
+                      number={index + 1}
+                      id_not_useParams={id}
+                      handleFormSubmit={handleSubmit}
+                      handleChangeAnswer={handleChangeAnswer}
+                />
+            )}
             <button type="submit" onClick={handleSubmit} className="btn btn-primary">Отправить</button>
         </div>
     );

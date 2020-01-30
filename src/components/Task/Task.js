@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux";
 import {getProblem} from "../../actions/getProblem";
 
 
-const Task = ({id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
+const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
     let {id_task} = useParams();
     if (id_task === undefined) {
         id_task = id_not_useParams
@@ -37,7 +37,7 @@ const Task = ({id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
 
     return (
         <div className="card border-secondary mb-3">
-            <div className="card-header">Вопрос {id_task}.</div>
+            <div className="card-header">Вопрос {number}.</div>
             <div className="card-body">
                 <p className="card-text">{body}</p>
             </div>
