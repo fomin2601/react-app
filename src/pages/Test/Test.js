@@ -9,7 +9,7 @@ const Test = () => {
     let {id_test} = useParams();
     const [test, setTest] = useState(null);
     const [task, setTask] = useState(null);
-    const [answers, setAnswers] = useState({});
+    const [answers, setAnswers] = useState({answer_1: '', answer_2: ''});
 
     /*useEffect(() => {
         setTask("Hi");
@@ -28,10 +28,14 @@ const Test = () => {
     };
 
     const handleChangeAnswer = e => {
-        setAnswers(e.target.value);
+        console.log(answers);
+
+        answers[e.target.name]= e.target.value;
+        setAnswers(answers => {
+            return {...answers, ...answers}
+        });
+        console.log(answers);
     };
-
-
 
     return (
         <div className="Test">
@@ -41,7 +45,7 @@ const Test = () => {
                       key={key}/>
             )}*/}
             <Task id_not_useParams={1} handleFormSubmit={handleSubmit} handleChangeAnswer={handleChangeAnswer}/>
-            <Task id_not_useParams={1} handleFormSubmit={handleSubmit} handleChangeAnswer={handleChangeAnswer}/>
+            <Task id_not_useParams={2} handleFormSubmit={handleSubmit} handleChangeAnswer={handleChangeAnswer}/>
             <button type="submit" onClick={handleSubmit} className="btn btn-primary">Отправить</button>
         </div>
     );

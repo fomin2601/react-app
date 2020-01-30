@@ -47,7 +47,7 @@ const Task = ({id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
                         <label>
                             <input
                                 type="radio"
-                                name="react-tips"
+                                name={"answer_" + id_not_useParams}
                                 value="answer_1"
                                 /*checked={selectedAnswer === "1"}*/
                                 onChange={handleChangeAnswer}
@@ -60,7 +60,7 @@ const Task = ({id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
                         <label>
                             <input
                                 type="radio"
-                                name="react-tips"
+                                name={"answer_" + id_not_useParams}
                                 value="answer_2"
                                 /*checked={selectedAnswer === "2"}*/
                                 onChange={handleChangeAnswer}
@@ -73,7 +73,7 @@ const Task = ({id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
                         <label>
                             <input
                                 type="radio"
-                                name="react-tips"
+                                name={"answer_" + id_not_useParams}
                                 value="answer_3"
                                 /*checked={selectedAnswer === "3"}*/
                                 onChange={handleChangeAnswer}
@@ -86,7 +86,7 @@ const Task = ({id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
                         <label>
                             <input
                                 type="radio"
-                                name="react-tips"
+                                name={"answer_" + id_not_useParams}
                                 value="answer_4"
                                 /*checked={selectedAnswer === "4"}*/
                                 onChange={handleChangeAnswer}
