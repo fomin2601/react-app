@@ -8,12 +8,12 @@ class Problem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '2',
+            id: '1',
             body: '',
-            answer0: '',
-            answer1: '',
-            answer2: '',
-            answer3: '',
+            answer_1: '',
+            answer_2: '',
+            answer_3: '',
+            answer_4: '',
             selectedOption: ''
         };
         this.props.getProblem(this.state.id).then(res => {
@@ -36,7 +36,7 @@ class Problem extends React.Component {
     };
 
     render() {
-        const {id, body, answer0, answer1, answer2, answer3} = this.state;
+        const {id, body, answer_1, answer_2, answer_3, answer_4} = this.state;
         return (
             <div className="jumbotron">
                 <h1>Вопрос {id}.</h1>
@@ -55,7 +55,7 @@ class Problem extends React.Component {
                                             onChange={this.handleOptionChange}
                                             className="form-check-input"
                                         />
-                                        {answer0}
+                                        {answer_1}
                                     </label>
                                 </div>
                                 <div className="form-check">
@@ -68,7 +68,7 @@ class Problem extends React.Component {
                                             onChange={this.handleOptionChange}
                                             className="form-check-input"
                                         />
-                                        {answer1}
+                                        {answer_2}
                                     </label>
                                 </div>
                                 <div className="form-check">
@@ -81,7 +81,7 @@ class Problem extends React.Component {
                                             onChange={this.handleOptionChange}
                                             className="form-check-input"
                                         />
-                                        {answer2}
+                                        {answer_3}
                                     </label>
                                 </div>
                                 <div className="form-check">
@@ -94,7 +94,7 @@ class Problem extends React.Component {
                                             onChange={this.handleOptionChange}
                                             className="form-check-input"
                                         />
-                                        {answer3}
+                                        {answer_4}
                                     </label>
                                 </div>
                                 <div className="form-group">

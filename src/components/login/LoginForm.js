@@ -10,7 +10,7 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            identifier: '',
+            mail: '',
             password: '',
             errors: '',
             isLoading: false
@@ -51,7 +51,7 @@ class LoginForm extends React.Component {
     }
 
     render() {
-        const {errors, identifier, password, isLoading} = this.state;
+        const {errors, mail, password, isLoading} = this.state;
         return (
             <form onSubmit={this.onSubmit}>
                 <h1>Вход</h1>
@@ -61,12 +61,13 @@ class LoginForm extends React.Component {
                 <TextFieldGroup
                     label={"Почта"}
                     onChange={this.onChange}
-                    field={"identifier"}
-                    value={identifier}
+                    field={"mail"}
+                    value={mail}
                     error={errors.identifier}
                 />
 
                 <TextFieldGroup
+                    type={"password"}
                     label={"Пароль"}
                     onChange={this.onChange}
                     field={"password"}
@@ -75,7 +76,7 @@ class LoginForm extends React.Component {
                 />
 
                 <div className={"form-group"}>
-                    <button className={"btn btn-primary btn-lg"} disabled={isLoading}>Войти</button>
+                    <button className={"btn btn-primary btn-lg btn-block"} disabled={isLoading}>Войти</button>
                 </div>
 
             </form>

@@ -5,38 +5,39 @@ import {useDispatch} from "react-redux";
 import {getProblem} from "../../actions/getProblem";
 
 
-const Task = ({selectedOption, handleFormSubmit}) => {
-    let {id} = useParams();
+const Task = ({id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
+    let {id_task} = useParams();
+    if (id_task === undefined) {
+        id_task = id_not_useParams
+    };
     const [body, setBody] = useState(null);
     const [answer_1, setAnswer_1] = useState(null);
     const [answer_2, setAnswer_2] = useState(null);
     const [answer_3, setAnswer_3] = useState(null);
     const [answer_4, setAnswer_4] = useState(null);
-    const [changeState, setChangeState] = useState({selectedOption});
-
+    const [answerTask, setAnswerTask] = useState(null);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getProblem(id)).then(res => {
+        dispatch(getProblem(id_task)).then(res => {
             setBody(res.data.body);
-            setAnswer_1(res.data.answer0);
-            setAnswer_2(res.data.answer1);
-            setAnswer_3(res.data.answer2);
-            setAnswer_4(res.data.answer3);
+            setAnswer_1(res.data.answer_1);
+            setAnswer_2(res.data.answer_2);
+            setAnswer_3(res.data.answer_3);
+            setAnswer_4(res.data.answer_4);
             console.log(res.data);
         })
     }, []);
 
-    const handleOptionChange = changeEvent => {
-        setChangeState({
-            selectedOption: changeEvent.target.value
-        });
-    };
+    /*const handleChangeAnswer = e => {
+        setAnswerTask(e.target.value);
+    };*/
+
 
     return (
         <div className="card border-secondary mb-3">
-            <div className="card-header">Вопрос {id}.</div>
+            <div className="card-header">Вопрос {id_task}.</div>
             <div className="card-body">
                 <p className="card-text">{body}</p>
             </div>
@@ -47,9 +48,9 @@ const Task = ({selectedOption, handleFormSubmit}) => {
                             <input
                                 type="radio"
                                 name="react-tips"
-                                value="option1"
-                                checked={selectedOption === "option1"}
-                                onChange={handleOptionChange}
+                                value="answer_1"
+                                /*checked={selectedAnswer === "1"}*/
+                                onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
                             {answer_1}
@@ -60,9 +61,9 @@ const Task = ({selectedOption, handleFormSubmit}) => {
                             <input
                                 type="radio"
                                 name="react-tips"
-                                value="option2"
-                                checked={selectedOption === "option2"}
-                                onChange={handleOptionChange}
+                                value="answer_2"
+                                /*checked={selectedAnswer === "2"}*/
+                                onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
                             {answer_2}
@@ -73,9 +74,9 @@ const Task = ({selectedOption, handleFormSubmit}) => {
                             <input
                                 type="radio"
                                 name="react-tips"
-                                value="option3"
-                                checked={selectedOption === "option3"}
-                                onChange={handleOptionChange}
+                                value="answer_3"
+                                /*checked={selectedAnswer === "3"}*/
+                                onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
                             {answer_3}
@@ -86,9 +87,9 @@ const Task = ({selectedOption, handleFormSubmit}) => {
                             <input
                                 type="radio"
                                 name="react-tips"
-                                value="option4"
-                                checked={selectedOption === "option4"}
-                                onChange={handleOptionChange}
+                                value="answer_4"
+                                /*checked={selectedAnswer === "4"}*/
+                                onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
                             {answer_4}
@@ -100,9 +101,9 @@ const Task = ({selectedOption, handleFormSubmit}) => {
 )
 };
 
-Task.propTypes = {
+/*Task.propTypes = {
     handleOptionChange: PropTypes.func.isRequired,
     handleFormSubmit: PropTypes.func.isRequired,
-};
+};*/
 
 export default Task;

@@ -3,16 +3,20 @@ import PropTypes from "prop-types";
 import validateInput from '../../shared/validations/signup';
 import TextFieldGroup from "../common/TextFieldGroup";
 import history from '../../history'
+import classnames from "classnames";
 
 
 class SignupForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            name: '',
+            second_name: '',
+            third_name: '',
             email: '',
             password: '',
             passwordConfirmation: '',
+            status: 'student',
             errors: {},
             isLoading: false,
             invalid: false
@@ -45,7 +49,7 @@ class SignupForm extends React.Component {
                 let errors = this.state.errors;
                 let invalid;
                 if (res.data.user) {
-                    errors[field] = 'Другой пользователь уже есть с таким полем: ' + field;
+                    errors[field] = 'Такая почта уже есть в системе!';
                     invalid = true;
                 } else {
                     errors[field] = '';
@@ -68,13 +72,14 @@ class SignupForm extends React.Component {
                     this.props.addFlashMessage({
                         type: 'success',
                         text: 'Вы вошли в систему, поздравляем!'
-                    })
+                    });
                     history.push('/')
                 },
                 ({data}) => this.setState({errors: data, isLoading: false})
             );
         }
     }
+
 
     render() {
         const {errors} = this.state;
@@ -83,12 +88,27 @@ class SignupForm extends React.Component {
                 <h1>Присоединяйся к нам!</h1>
 
                 <TextFieldGroup
-                    error={errors.username}
-                    label="Имя пользователя"
+                    error={errors.third_name}
+                    label="Фамилия"
                     onChange={this.onChange}
-                    checkUserExists={this.checkUserExists}
-                    value={this.state.username}
-                    field="username"
+                    value={this.state.third_name}
+                    field="third_name"
+                />
+
+                <TextFieldGroup
+                    error={errors.name}
+                    label="Имя"
+                    onChange={this.onChange}
+                    value={this.state.name}
+                    field="name"
+                />
+
+                <TextFieldGroup
+                    error={errors.second_name}
+                    label="Отчество"
+                    onChange={this.onChange}
+                    value={this.state.second_name}
+                    field="second_name"
                 />
 
                 <TextFieldGroup
@@ -101,6 +121,7 @@ class SignupForm extends React.Component {
                 />
 
                 <TextFieldGroup
+                    type={"password"}
                     error={errors.password}
                     label="Пароль"
                     onChange={this.onChange}
@@ -109,6 +130,7 @@ class SignupForm extends React.Component {
                 />
 
                 <TextFieldGroup
+                    type={"password"}
                     error={errors.passwordConfirmation}
                     label="Повтор пароля"
                     onChange={this.onChange}
@@ -116,8 +138,34 @@ class SignupForm extends React.Component {
                     field="passwordConfirmation"
                 />
 
+                <div className="btn-group btn-group-toggle" data-toggle="buttons" style={{display: 'flex', justifyContent: 'center'}}>
+                    <label className={classnames("btn btn-primary", {'active': (this.state.status === "student")})}>
+                        <input
+                            value="student"
+                            onChange={this.onChange}
+                            type="radio"
+                            name="status"
+                            id="option1"
+                            autoComplete="off"
+                            checked=""/>
+                        Студент
+                    </label>
+                    <label className={classnames("btn btn-primary", {'active': (this.state.status === "teacher")})}>
+                        <input
+                            value="teacher"
+                            onChange={this.onChange}
+                            type="radio"
+                            name="status"
+                            id="option2"
+                            autoComplete="off"/>
+                        Преподаватель
+                    </label>
+                </div>
+                <br/>
+
                 <div className="form-group">
-                    <button disabled={this.state.isLoading || this.state.invalid} className="btn btn-primary btn-lg">Зарегистрироваться</button>
+                    <button disabled={this.state.isLoading || this.state.invalid}
+                            className="btn btn-primary btn-lg btn-block">Зарегистрироваться</button>
 
                 </div>
             </form>
@@ -129,6 +177,6 @@ SignupForm.propTypes = {
     userSignupRequest: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
     isUserExists: PropTypes.func.isRequired
-}
+};
 
 export default SignupForm;

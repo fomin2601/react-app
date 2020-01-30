@@ -4,8 +4,14 @@ import isEmpty from 'lodash/isEmpty';
 export default function validateInput(data) {
     let errors = {};
 
-    if (Validator.isEmpty(data.username)) {
-        errors.username = 'Заполните поле';
+    if (Validator.isEmpty(data.name)) {
+        errors.name = 'Заполните поле';
+    }
+    if (Validator.isEmpty(data.second_name)) {
+        errors.second_name = 'Заполните поле';
+    }
+    if (Validator.isEmpty(data.third_name)) {
+        errors.third_name = 'Заполните поле';
     }
     if (Validator.isEmpty(data.email)) {
         errors.email = 'Заполните поле';

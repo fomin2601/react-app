@@ -4,16 +4,16 @@ import PropTypes from "prop-types";
 
 const TextFieldGroup = ({ field, value, label, error, type, onChange, checkUserExists }) => {
     return (
-        <div className={classnames("form-group", {'has-error': error})}>
-            <label className="control-label">{label}</label>
+        <div className={classnames("form-group", {'has-danger': error})}>
+            <label className="form-control-label">{label}</label>
             <input
                    type={type}
                    onBlur={checkUserExists}
                    value={value}
                    onChange={onChange}
                    name={field}
-                   className="form-control"/>
-            {error && <span className="help-block">{error}</span>}
+                   className={classnames("form-control", {'is-invalid': error})}/>
+            {error && <div className="invalid-feedback">{error}</div>}
         </div>
     );
 }

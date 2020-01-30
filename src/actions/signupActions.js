@@ -10,7 +10,7 @@ export function isUserExists(identifier) {
     return dispatch => {
         return axios.get('/api/users?', {
             params: {
-                arg: identifier
+                email: identifier
             }
         })
     }
