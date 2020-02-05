@@ -3,14 +3,12 @@ import React, {useEffect, useState} from "react";
 import Task from "../../components/Task";
 import {useParams} from "react-router";
 import {useDispatch} from "react-redux";
-import {getProblem} from "../../actions/getProblem";
-import {getTest} from "../../actions/getTest";
+import {getTest, checkTest} from "../../actions/getTest";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const Test = () => {
     let {id_test} = useParams();
-    const [test, setTest] = useState(null);
     const [tasks, setTasks] = useState(null);
     const [answers, setAnswers] = useState({});
 
@@ -20,6 +18,7 @@ const Test = () => {
         dispatch(getTest(id_test)).then(res => {
             console.log(res.data);
             setTasks(res.data.problems);
+            res.data.problems.split("|").map((id) => answers["answer_" + id] = '')
         })
     }, []);
 
@@ -27,6 +26,9 @@ const Test = () => {
         e.preventDefault();
         await sleep(500);
         alert(JSON.stringify({answers}, null,2));
+        dispatch(checkTest(answers)).then(res => {
+            console.log('отправил ответы')
+        })
     };
 
     const handleChangeAnswer = e => {
@@ -47,7 +49,7 @@ const Test = () => {
                       handleChangeAnswer={handleChangeAnswer}
                 />
             )}
-            <button type="submit" onClick={handleSubmit} className="btn btn-primary">Отправить</button>
+            <button type="submit" onClick={handleSubmit} className="btn btn-primary">Проверить</button>
         </div>
     );
 };

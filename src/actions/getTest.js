@@ -9,3 +9,9 @@ export function getTest(id) {
         })
     }
 }
+
+export function checkTest(answers) {
+    return dispatch => {
+        return axios.post('/api/check_test', answers)
+    }
+}

@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router";
-import PropTypes from "prop-types";
 import {useDispatch} from "react-redux";
 import {getProblem} from "../../actions/getProblem";
 
@@ -11,17 +10,18 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
         id_task = id_not_useParams
     };
     const [body, setBody] = useState(null);
+    const [type_question, setType_question] = useState(null);
     const [answer_1, setAnswer_1] = useState(null);
     const [answer_2, setAnswer_2] = useState(null);
     const [answer_3, setAnswer_3] = useState(null);
     const [answer_4, setAnswer_4] = useState(null);
-    const [answerTask, setAnswerTask] = useState(null);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getProblem(id_task)).then(res => {
             setBody(res.data.body);
+            setType_question(res.data.type_question);
             setAnswer_1(res.data.answer_1);
             setAnswer_2(res.data.answer_2);
             setAnswer_3(res.data.answer_3);
@@ -30,10 +30,6 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
         })
     }, []);
 
-    /*const handleChangeAnswer = e => {
-        setAnswerTask(e.target.value);
-    };*/
-
 
     return (
         <div className="card border-secondary mb-3">
@@ -41,7 +37,8 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
             <div className="card-body">
                 <p className="card-text">{body}</p>
             </div>
-            <div className="container">
+
+            {type_question === 1 && <div className="container">
                 <form onSubmit={handleFormSubmit}>
                     <div className="form-check">
                         <label>
@@ -49,7 +46,6 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                                 type="radio"
                                 name={"answer_" + id_not_useParams}
                                 value="answer_1"
-                                /*checked={selectedAnswer === "1"}*/
                                 onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
@@ -62,7 +58,6 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                                 type="radio"
                                 name={"answer_" + id_not_useParams}
                                 value="answer_2"
-                                /*checked={selectedAnswer === "2"}*/
                                 onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
@@ -75,7 +70,6 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                                 type="radio"
                                 name={"answer_" + id_not_useParams}
                                 value="answer_3"
-                                /*checked={selectedAnswer === "3"}*/
                                 onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
@@ -88,7 +82,6 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                                 type="radio"
                                 name={"answer_" + id_not_useParams}
                                 value="answer_4"
-                                /*checked={selectedAnswer === "4"}*/
                                 onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
@@ -96,14 +89,22 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                         </label>
                     </div>
                 </form>
-            </div>
+            </div>}
+            {type_question === 2 && <div className="container">
+                <form onSubmit={handleFormSubmit}>
+                    <div className="form-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Введите ответ"
+                            name={"answer_" + id_not_useParams}
+                            onChange={handleChangeAnswer}/>
+                    </div>
+                </form>
+            </div>}
+
         </div>
 )
 };
-
-/*Task.propTypes = {
-    handleOptionChange: PropTypes.func.isRequired,
-    handleFormSubmit: PropTypes.func.isRequired,
-};*/
 
 export default Task;
