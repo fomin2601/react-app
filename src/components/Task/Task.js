@@ -2,9 +2,10 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {useDispatch} from "react-redux";
 import {getProblem} from "../../actions/getProblem";
+import classnames from "classnames";
 
 
-const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) => {
+const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit, errors, viewResult}) => {
     let {id_task} = useParams();
     if (id_task === undefined) {
         id_task = id_not_useParams
@@ -26,15 +27,16 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
             setAnswer_2(res.data.answer_2);
             setAnswer_3(res.data.answer_3);
             setAnswer_4(res.data.answer_4);
-            console.log(res.data);
         })
     }, []);
 
 
     return (
-        <div className="card border-secondary mb-3">
+
+        <div className={classnames("card mb-3", {"border-danger": viewResult === false}, {"border-success": viewResult === true})}>
             <div className="card-header">Вопрос {number}.</div>
             <div className="card-body">
+                <a name={"task_" + id_task}></a>
                 <p className="card-text">{body}</p>
             </div>
 
@@ -45,7 +47,7 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                             <input
                                 type="radio"
                                 name={"answer_" + id_not_useParams}
-                                value="answer_1"
+                                value="1"
                                 onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
@@ -57,7 +59,7 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                             <input
                                 type="radio"
                                 name={"answer_" + id_not_useParams}
-                                value="answer_2"
+                                value="2"
                                 onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
@@ -69,7 +71,7 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                             <input
                                 type="radio"
                                 name={"answer_" + id_not_useParams}
-                                value="answer_3"
+                                value="3"
                                 onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
@@ -81,7 +83,7 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                             <input
                                 type="radio"
                                 name={"answer_" + id_not_useParams}
-                                value="answer_4"
+                                value="4"
                                 onChange={handleChangeAnswer}
                                 className="form-check-input"
                             />
@@ -99,9 +101,11 @@ const Task = ({number, id_not_useParams, handleChangeAnswer, handleFormSubmit}) 
                             placeholder="Введите ответ"
                             name={"answer_" + id_not_useParams}
                             onChange={handleChangeAnswer}/>
+
                     </div>
                 </form>
             </div>}
+            { errors && <div className="alert alert-danger">{errors}</div> }
 
         </div>
 )
