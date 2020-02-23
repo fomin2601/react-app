@@ -1,0 +1,20 @@
+.PageLayout-Content {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  display: flex;
+}
+
+.PageLayout-Left {
+  width: calc(100% - 300px);
+  margin-right: 20px;
+}
+
+.PageLayout-Right {
+  width: 300px;
+  display: block;
+  align-self: stretch;
+}
+
+/*# sourceMappingURL=Test.css.map */
